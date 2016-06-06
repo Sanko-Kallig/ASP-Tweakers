@@ -1,0 +1,73 @@
+﻿@using Tweakers.Models
+@model Tweakers.Models.ViewModel
+
+@{
+    ViewBag.Title = "Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Overview</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="Pricewatch">
+    <tr>
+        <th>
+        </th>
+        <th></th>
+    </tr>
+@if (ViewBag.id == 0)
+{
+    foreach (PriceWatchCategory c in Model.PriceWatch.Where(n => n.ParentCat == null))
+    {
+        <tr>
+            <td>
+                @c.Name
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = c.ID }) |
+                @Html.ActionLink("Details", "Overview", new { id = c.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = c.ID })
+            </td>
+        </tr>
+    }
+
+}
+else
+{
+    if (!Model.PriceWatch.Exists(n => n.SubID == ViewBag.id))
+    {
+        var c = Model.PriceWatch.Find(n => n.ID == ViewBag.id);
+        <tr>
+            @if (c.CatProducts != null)
+                 {
+                     foreach (Product p in c.CatProducts)
+                     {
+                         <td>
+                             @p.Name
+                         </td>
+                     }
+                 }
+        </tr>
+
+    }
+    else
+    {
+        foreach (PriceWatchCategory c in Model.PriceWatch.Where(n => n.SubID == ViewBag.id))
+        {
+            <tr>
+                <td>
+                    @c.Name
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = c.ID }) |
+                    @Html.ActionLink("Details", "Overview", new { id = c.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = c.ID })
+                </td>
+            </tr>
+        }
+    }
+}
+
+</table>
