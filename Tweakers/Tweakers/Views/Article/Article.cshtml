@@ -1,14 +1,14 @@
-﻿@model Tweakers.Models.Review
+﻿@model Tweakers.Models.Article
 
 @{
-    ViewBag.Title = "Review";
+    ViewBag.Title = "Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Review</h2>
+<h2>Article</h2>
 
 <div>
-    <h4>Review</h4>
+    <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,6 +17,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationDat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationDat)
         </dd>
 
         <dt>

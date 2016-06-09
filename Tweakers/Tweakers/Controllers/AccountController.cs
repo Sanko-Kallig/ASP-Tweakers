@@ -18,15 +18,25 @@ namespace Tweakers.Controllers
 
         public ActionResult Profile()
         {
-            var account = new Account() {UserName = "Sander", Type = "Admin"};
-            return View(account);
+            return View((Account)Session["User"]);
         }
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            Session["User"] = null;
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+
+        }
         public ActionResult Test()
         {
             return View(new ViewModel());
@@ -40,6 +50,22 @@ namespace Tweakers.Controllers
 
         public ActionResult UpdateProfile()
         {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(Account loginAccount)
+        {
+            if (loginAccount.Email != String.Empty && loginAccount.Password != string.Empty)
+            {
+                Session["User"] = loginAccount.GetAccount(loginAccount);
+                if(Session["User"] != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 

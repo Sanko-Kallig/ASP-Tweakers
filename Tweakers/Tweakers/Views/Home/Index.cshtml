@@ -1,9 +1,18 @@
-﻿
+﻿@using Tweakers.Models
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+
+@foreach (Article a in Model.Articles)
+{
+    <tr>
+        <td>
+            @Html.ActionLink(a.Title, "Article", new { id = a.ID}, new { @class = "list-group-item" })
+        </td>
+    </tr>
+}
 
 <a href="@Url.Action("About", "Home")">About</a>
 

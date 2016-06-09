@@ -197,14 +197,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Review\Overview.cshtml" />
-    <Content Include="Views\Review\Review.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\UpdateProfile.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Product\Overview.cshtml" />
     <Content Include="Views\Account\Test.cshtml" />
+    <Content Include="Views\Account\Logout.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
+    <Content Include="Views\Review\Review.cshtml" />
+    <Content Include="Views\Article\Article.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -214,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Article\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -23,12 +23,7 @@
     {
         <tr>
             <td>
-                @c.Name
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = c.ID }) |
-                @Html.ActionLink("Details", "Overview", new { id = c.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = c.ID })
+                @Html.ActionLink(c.Name, "Overview", new { id = c.ID }, new {@class = "list-group-item" })
             </td>
         </tr>
     }
@@ -44,9 +39,11 @@ else
                  {
                      foreach (Product p in c.CatProducts)
                      {
-                         <td>
-                             @p.Name
-                         </td>
+                         <tr>
+                             <td>
+                                 @Html.ActionLink(p.Name, "Product", new { id = p.ProductID}, new { @class = "list-group-item" })
+                             </td>
+                         </tr>
                      }
                  }
         </tr>
@@ -58,12 +55,7 @@ else
         {
             <tr>
                 <td>
-                    @c.Name
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = c.ID }) |
-                    @Html.ActionLink("Details", "Overview", new { id = c.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = c.ID })
+                    @Html.ActionLink(c.Name, "Overview", new { id = c.ID }, new { @class = "list-group-item" }  ) 
                 </td>
             </tr>
         }

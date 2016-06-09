@@ -49,5 +49,10 @@ namespace Tweakers.Models
         {
             return DatabaseManager.DisableAccount(account);
         }
+
+        public Account GetAccount(Account account)
+        {
+            return DatabaseManager.GetAccount(account);
+        }
     }
 }

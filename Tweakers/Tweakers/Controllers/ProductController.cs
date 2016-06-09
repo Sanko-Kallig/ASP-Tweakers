@@ -16,9 +16,12 @@ namespace Tweakers.Controllers
             return View();
         }
 
-        public ActionResult Product(int productid)
+        public ActionResult Product(int id = 0)
         {
-            return Content("id=" + productid);
+            Product product = new Product();
+            product = product.GetProduct(id);
+            product.GetReviews(product);
+            return View(product);
         }
 
         public ActionResult Overview(int id = 0)
