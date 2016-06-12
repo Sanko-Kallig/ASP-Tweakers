@@ -41,13 +41,17 @@
 <div>
     @if (Model.Reviews != null)
     {
-        foreach(Review r in Model.Reviews)
+        foreach (Review r in Model.Reviews)
         {
-            @Html.ActionLink(r.Title, "Review", "Review", Session["Product"] = Model, Session["Review"] = r);
+            @Html.ActionLink(r.Title, "Index", "Review", new {id = r.Title}, new {@class = "list-group-item"})
         }
     }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (((Account)Session["User"]).Type == "Medewerker")
+{
+    <p>
+        @Html.ActionLink("Edit", "UpdateProduct", new { id = Model.ProductID })
+    </p>
+}
+
+   

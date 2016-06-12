@@ -1,4 +1,5 @@
-﻿@model Tweakers.Models.Review
+﻿@using Tweakers.Models
+@model Tweakers.Models.Review
 
 @{
     ViewBag.Title = "Review";
@@ -29,7 +30,74 @@
 
     </dl>
 </div>
+<div>
+    @foreach (Reaction r in Model.Reactions)
+    {
+        <dl>
+            <dt>
+                @r.Account.UserName
+            </dt>
+            <dt>
+                @r.PostTime
+            </dt>
+            <dt>
+            <dd>
+                @Html.Raw(r.Context)
+            </dd>
+            </dt>
+        </dl>
+        <div>
+            @if (Session["User"] != null)
+            {
+                using (Html.BeginForm("PlaceReaction", "Article", FormMethod.Post, Model))
+                {
+                    <textarea name="reactionForm" id="reactionFormContent"></textarea>
+                    <div class="submit">
+                        <input type="submit" value="Place Reaction" class="button" />
+                    </div>
+                }
+
+            }
+        </div>
+
+        if (r.SubReactions != null)
+        {
+            foreach (Reaction sr in r.SubReactions)
+            {
+                <dl>
+                    <dt>
+                        @sr.Account.UserName
+                    </dt>
+                    <dt>
+                        @sr.PostTime
+                    </dt>
+                    <dt>
+                    <dd>
+                        @Html.Raw(sr.Context)
+                    </dd>
+                    </dt>
+                </dl>
+            }
+        }
+
+    }
+</div>
+<div>
+    @if (Session["User"] != null)
+    {
+        using (Html.BeginForm("PlaceReaction", "Review", FormMethod.Post, Model))
+        {
+            <textarea name="reactionForm" id="reactionFormContent"></textarea>
+            <div class="submit">
+                <input type="submit" value="Place Reaction" class="button" />
+            </div>
+        }
+
+    }
+</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (Session["User"] != null && Model.Reviewer.UserName == ((Account)Session["User"]).UserName)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    }
 </p>

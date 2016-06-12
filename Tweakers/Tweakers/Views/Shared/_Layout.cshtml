@@ -27,19 +27,19 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Session["User"] != null)
-            {
-                Account account = (Account)Session["User"];
-                    @Html.ActionLink("Profile", "Profile", "Account", new { area = "" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Welcome " + account.UserName + " (Logout)", "Logout", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                {
+                    Account account = (Account) Session["User"];
+                    @Html.ActionLink("Profile", "Profile", "Account", new {area = ""}, new {@class = "navbar-brand"})
+                    @Html.ActionLink("Welcome " + account.UserName + " (Logout)", "Logout", "Account", new {area = ""}, new {@class = "navbar-brand"})
                 }
                 else
                 {
-                    @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Login", "Login", "Account", new {area = ""}, new {@class = "navbar-brand"})
+                    @Html.ActionLink("Register", "Register", "Account", new {area = ""}, new {@class = "navbar-brand"})
                 }
             </ul>
         </div>
-    </div> 
+    </ul>
 </nav>
    
 

@@ -145,6 +145,7 @@
     <Content Include="scripts\bootstrap - lumen.css" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -172,6 +173,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\ArticleCategory.cs" />
     <Compile Include="Models\PriceWatchCategory.cs" />
     <Compile Include="Models\DatabaseManager.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -206,7 +208,11 @@
     <Content Include="Views\Account\Logout.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Review\Review.cshtml" />
-    <Content Include="Views\Article\Article.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
+    <Content Include="Views\Product\NewProduct.cshtml" />
+    <Content Include="Views\Article\NewArticle.cshtml" />
+    <Content Include="Views\Product\UpdateProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Tweakers.Models.Account">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAEAAAAAAARAIAAAAAAAACAQAgAEAAAAg=</HashCode>
+      <FileName>Models\Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tweakers.Models.Article">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <AssociationLine Name="Author" Type="Tweakers.Models.Account" FixedToPoint="true">
+      <Path>
+        <Point X="8.5" Y="1" />
+        <Point X="5.5" Y="1" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAEAAgAAgEAAgAAAAAAAAAAAAAAAEAABIIAAAAA=</HashCode>
+      <FileName>Models\Article.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Author" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Reactions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.DatabaseManager">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAIAAAAAAEgEAAQAAREAAAAAAAAACUAQACMAABAA=</HashCode>
+      <FileName>Models\DatabaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tweakers.Models.Employee" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tweakers.Models.PriceWatchCategory">
+    <Position X="12.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAgAAAAAAAAAQAACAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Models\PriceWatchCategory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ParentCat" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CatProducts" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.Product">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABAAEAAAQAAAAAAAAAAwAQAAAAAAAAAAAAACAAACAA=</HashCode>
+      <FileName>Models\Product.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Category" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.Reaction">
+    <Position X="10.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEA=</HashCode>
+      <FileName>Models\Reaction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Account" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="SubReactions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.Review">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAABgAAgEAAAAAAAAAAAAAAAAACAAABIAAAAAA=</HashCode>
+      <FileName>Models\Review.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Reviewer" />
+      <Property Name="Product" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Reactions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.Subscriber" Collapsed="true">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Subscriber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tweakers.Models.ViewModel">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAIgIAAA=</HashCode>
+      <FileName>Models\ViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Articles" />
+      <Property Name="PriceWatch" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Tweakers.Models.Wishlist">
+    <Position X="16.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Wishlist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

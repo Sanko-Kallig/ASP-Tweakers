@@ -23,6 +23,17 @@ namespace Tweakers
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Product", action = "Overview", id = UrlParameter.Optional }
                 );
+            routes.MapRoute(
+                name: "Article",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Article", action = "Index", id = UrlParameter.Optional }
+                );
+            routes.MapRoute(
+                name: "Review",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "REview", action = "Review", id = UrlParameter.Optional }
+     );
+
         }
     }
 }

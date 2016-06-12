@@ -10,14 +10,20 @@ namespace Tweakers.Controllers
     public class ReviewController : Controller
     {
         // GET: Review
-        public ActionResult Index()
+        public ActionResult Index(string id = "")
         {
-            return View();
+            Review currentReview = new Review();
+            currentReview = currentReview.GetReview(id);
+            currentReview.GetReactions(currentReview);
+            Session["CurrentReview"] = currentReview;
+            return View(currentReview);
         }
 
-        public ActionResult Review()
+        [HttpPost]
+        public ActionResult PlaceReaction(FormCollection collection)
         {
-            return View((Review)Session["Review"]);
+            ((Review)Session["CurrentReview"]).AddReaction(collection["reactionForm"], (Review)Session["CurrentReview"], (Account)Session["User"]);
+            return RedirectToAction("Index", "Review", new { id = ((Review)Session["CurrentReview"]).Title + "/" });
         }
     }
 }

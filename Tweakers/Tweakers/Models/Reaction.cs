@@ -7,16 +7,18 @@ namespace Tweakers.Models
 {
     public class Reaction
     {
+        public int Id { get; set; }
         public Account Account { get; set; }
 
         public DateTime PostTime { get; set; }
 
         public string Context { get; set; }
 
-        private List<Reaction> SubReactions { get; set; }
+        public List<Reaction> SubReactions { get; set; }
 
-        public Reaction(Account account, DateTime postTime, string context)
+        public Reaction(int id, Account account, DateTime postTime, string context)
         {
+            this.Id = id;
             this.Account = account;
             this.PostTime = postTime;
             this.Context = context;

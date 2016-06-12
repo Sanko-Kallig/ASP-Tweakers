@@ -1,0 +1,110 @@
+﻿@using Tweakers.Models
+@model Tweakers.Models.Review
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Review</h2>
+
+<div>
+    <h4>Review</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Context)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Context)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @if (Model.Reactions != null)
+    {
+        foreach (Reaction r in Model.Reactions)
+        {
+            <dl>
+                <dt>
+                    @r.Account.UserName
+                </dt>
+                <dt>
+                    @r.PostTime
+                </dt>
+                <dt>
+                <dd>
+                    @Html.Raw(r.Context)
+                </dd>
+                </dt>
+            </dl>
+            <div>
+                @if (Session["User"] != null)
+                {
+                    using (Html.BeginForm("PlaceReaction", "Article", FormMethod.Post, Model))
+                    {
+                        <textarea name="reactionForm" id="reactionFormContent"></textarea>
+                        <div class="submit">
+                            <input type="submit" value="Place Reaction" class="button" />
+                        </div>
+                    }
+
+                }
+            </div>
+
+            if (r.SubReactions != null)
+            {
+                foreach (Reaction sr in r.SubReactions)
+                {
+                    <dl>
+                        <dt>
+                            @sr.Account.UserName
+                        </dt>
+                        <dt>
+                            @sr.PostTime
+                        </dt>
+                        <dt>
+                        <dd>
+                            @Html.Raw(sr.Context)
+                        </dd>
+                        </dt>
+                    </dl>
+                }
+            }
+
+        }
+    }
+</div>
+<div>
+    @if (Session["User"] != null)
+    {
+        using (Html.BeginForm("PlaceReaction", "Review", FormMethod.Post, Model))
+        {
+            <br/>
+            <P>
+                Plaats een reactie op deze review.
+            </P>
+            <textarea name="reactionForm" id="reactionFormContent"></textarea>
+            <div class="submit">
+                <input type="submit" value="Place Reaction" class="button" />
+            </div>
+        }
+
+    }
+</div>
+<p>
+    @if (Session["User"] != null && Model.Reviewer.UserName == ((Account)Session["User"]).UserName)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    }
+</p>

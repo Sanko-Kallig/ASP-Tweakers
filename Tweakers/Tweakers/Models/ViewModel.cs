@@ -7,9 +7,11 @@ namespace Tweakers.Models
 {
     public class ViewModel
     {
-        public List<PriceWatchCategory> PriceWatch = new List<PriceWatchCategory>();
+        public List<PriceWatchCategory> PriceWatch { get; set; }
 
-        public List<Article> Articles = new List<Article>();
+        public List<Article> Articles { get; set; }
+
+        public List<ArticleCategory> ArticleCategories { get; set; }
 
         public ViewModel()
         {

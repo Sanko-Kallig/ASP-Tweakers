@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Web.UI.WebControls;
 using Oracle.DataAccess.Client;
 
 namespace Tweakers.Models
@@ -25,7 +26,7 @@ namespace Tweakers.Models
             }
         }
 
-        internal static List<Product> GetProducts()
+        public static List<Product> GetProducts()
         {
             throw new NotImplementedException();
         }
@@ -79,6 +80,346 @@ namespace Tweakers.Models
                     throw;
                 }
                 
+            }
+        }
+
+        public static bool UpdateProduct(Product product)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "UPDATE PRODUCT SET Naam = :name, Prijs = :price, Specificaties = :specifications WHERE ID = :id");
+                    commandInsert.Parameters.Add(":name", product.Name);
+                    commandInsert.Parameters.Add(":price", product.Price);
+                    commandInsert.Parameters.Add(":specifications", product.Specifications);
+                    commandInsert.Parameters.Add(":id", product.ProductID);
+
+                    return ExecuteNonQuery(commandInsert);
+
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+
+        public static bool AddProduct(Product product, int catID)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO PRODUCT(ID, NAAM, PRIJS, SPECIFICATIES, CAT_ID) VALUES(Product_FCSEQ.NextVal, :name, :price, :specifications, :catID)");
+                    commandInsert.Parameters.Add(":name", product.Name);
+                    commandInsert.Parameters.Add(":price", product.Price);
+                    commandInsert.Parameters.Add(":specifications", product.Specifications);
+                    commandInsert.Parameters.Add(":catID", catID);
+
+                    return ExecuteNonQuery(commandInsert);
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+
+        public static bool AddReviewReaction(Reaction reaction, Review review, Account account)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO REACTIE (ID, ACCOUNT, DATUM, BERICHT) VALUES (Reactie_FCSEQ.NextVal, :account, :datum, :bericht)");
+                    commandInsert.Parameters.Add(":account", account.UserName);
+                    commandInsert.Parameters.Add(":datum", reaction.PostTime);
+                    commandInsert.Parameters.Add(":bericht", reaction.Context);
+                    commandInsert.BindByName = true;
+
+                    if (ExecuteNonQuery(commandInsert))
+                    {
+                        OracleCommand commandSelect = CreateOracleCommand(connection, "SELECT MAX(ID) FROM REACTIE");
+                        OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                        int id = 0;
+                        while (MainReader.Read())
+                        {
+                            id = Convert.ToInt32(MainReader["MAX(ID)"].ToString());
+                        }
+                        commandInsert = CreateOracleCommand(connection,
+                            "INSERT INTO REACTIE_REVIEW (REVIEW_ID, REACTIE_ID) VALUES(:reviewID, :reactionID)");
+                        commandInsert.Parameters.Add(":review", review.ID);
+                        commandInsert.Parameters.Add(":reactionID", id);
+                        return ExecuteNonQuery(commandInsert);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public static bool AddArticleReaction(Reaction reaction, Article article, Account account)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO REACTIE (ID, ACCOUNT, DATUM, BERICHT) VALUES (Reactie_FCSEQ.NextVal, :account, :datum, :bericht)");
+                    commandInsert.Parameters.Add(":account", account.UserName);
+                    commandInsert.Parameters.Add(":datum", reaction.PostTime);
+                    commandInsert.Parameters.Add(":bericht", reaction.Context);
+                    commandInsert.BindByName = true;
+
+                    if (ExecuteNonQuery(commandInsert))
+                    {
+                        OracleCommand commandSelect = CreateOracleCommand(connection, "SELECT MAX(ID) FROM REACTIE");
+                        OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                        int id = 0;
+                        while (MainReader.Read())
+                        {
+                            id = Convert.ToInt32(MainReader["MAX(ID)"].ToString());
+                        }
+                        commandInsert = CreateOracleCommand(connection,
+                            "INSERT INTO REACTIE_ARTIKEL (ARTIKEL_ID, REACTIE_ID) VALUES(:articleID, :reactionID)");
+                        commandInsert.Parameters.Add(":articleID", article.ID);
+                        commandInsert.Parameters.Add(":reactionID", id);
+                        return ExecuteNonQuery(commandInsert);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+        public static bool AddSubArticleReaction(Reaction reaction,int parentid, Article article, Account account)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO REACTIE (ID, ACCOUNT, DATUM, BERICHT) VALUES (Reactie_FCSEQ.NextVal, :account, :datum, :bericht)");
+                    commandInsert.Parameters.Add(":account", account.UserName);
+                    commandInsert.Parameters.Add(":datum", reaction.PostTime);
+                    commandInsert.Parameters.Add(":bericht", reaction.Context);
+                    commandInsert.BindByName = true;
+
+                    if (ExecuteNonQuery(commandInsert))
+                    {
+                        OracleCommand commandSelect = CreateOracleCommand(connection, "SELECT MAX(ID) FROM REACTIE");
+                        OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                        int id = 0;
+                        while (MainReader.Read())
+                        {
+                            id = Convert.ToInt32(MainReader["MAX(ID)"].ToString());
+                        }
+                        commandInsert = CreateOracleCommand(connection,
+                            "INSERT INTO REACTIE_ARTIKEL (ARTIKEL_ID, REACTIE_ID) VALUES(:articleID, :reactionID)");
+                        commandInsert.Parameters.Add(":articleID", article.ID);
+                        commandInsert.Parameters.Add(":reactionID", id);
+                        if(ExecuteNonQuery(commandInsert))
+                        {
+                            commandInsert = CreateOracleCommand(connection,
+                                "INSERT INTO SUBREACTIE(REACTIE_ID, SUBREACTIE_ID) VALUES(:parentid, :childid)");
+                            commandInsert.Parameters.Add(":parentid", parentid);
+                            commandInsert.Parameters.Add(":childid", id);
+                            return ExecuteNonQuery(commandInsert);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public static List<Reaction> GetReactions(Article article)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    List<Reaction> returnReactions = new List<Reaction>();
+                    OracleCommand commandSelect = CreateOracleCommand(connection, "select * from REACTIE LEFT JOIN SUBREACTIE ON REACTIE.ID = SUBREACTIE_ID LEFT JOIN ACCOUNT ON REACTIE.ACCOUNT = ACCOUNT.GEBRUIKERSNAAM WHERE ID in (select reactie_id from REACTIE_ARTIKEL where ARTIKEL_ID = (select id from artikel where titel = :title))");
+                    commandSelect.Parameters.Add(":title", article.Title);
+
+                    OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                    while (MainReader.Read())
+                    {
+                        if (MainReader["Reactie_ID"].ToString() == string.Empty)
+                        {
+                            int id = Convert.ToInt32(MainReader["ID"].ToString());
+                            Account account = new Account();
+                            account.UserName = MainReader["Gebruikersnaam"].ToString();
+                            account.FirstName = MainReader["Voornaam"].ToString();
+                            account.LastName = MainReader["Achternaam"].ToString();
+                            account.Education = MainReader["Opleidingsniveau"].ToString();
+                            account.Function = MainReader["Functie"].ToString();
+                            DateTime datetime = Convert.ToDateTime(MainReader["DATUM"].ToString());
+                            string context = MainReader["Bericht"].ToString();
+                            returnReactions.Add(new Reaction(id, account, datetime, context));
+                        }
+                    }
+                    foreach(Reaction r in returnReactions)
+                    {
+                        r.SubReactions = new List<Reaction>();
+                        MainReader = ExecuteQuery(commandSelect);
+                        while (MainReader.Read())
+                        {
+                            if (MainReader["Reactie_ID"].ToString() != string.Empty && Convert.ToInt32(MainReader["Reactie_ID"].ToString()) == r.Id)
+                            {
+                                int id = Convert.ToInt32(MainReader["ID"].ToString());
+                                Account account = new Account();
+                                account.UserName = MainReader["Gebruikersnaam"].ToString();
+                                account.FirstName = MainReader["Voornaam"].ToString();
+                                account.LastName = MainReader["Achternaam"].ToString();
+                                account.Education = MainReader["Opleidingsniveau"].ToString();
+                                account.Function = MainReader["Functie"].ToString();
+                                DateTime datetime = Convert.ToDateTime(MainReader["DATUM"].ToString());
+                                string context = MainReader["Bericht"].ToString();
+                                r.SubReactions.Add(new Reaction(id, account, datetime, context));
+                            }
+                        }
+                        r.SubReactions.Sort((x, y) => y.PostTime.CompareTo(x.PostTime));
+                    }
+                    return returnReactions;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+
+        public static List<Reaction> GetReactions(Review review)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    List<Reaction> returnReactions = new List<Reaction>();
+                    OracleCommand commandSelect = CreateOracleCommand(connection, "select * from REACTIE LEFT JOIN SUBREACTIE ON REACTIE.ID = SUBREACTIE_ID LEFT JOIN ACCOUNT ON REACTIE.ACCOUNT = ACCOUNT.GEBRUIKERSNAAM WHERE ID in (select reactie_id from REACTIE_REVIEW where REVIEW_ID = (select id from review where titel = :title))");
+                    commandSelect.Parameters.Add(":title", review.Title);
+
+                    OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                    if (!MainReader.HasRows)
+                    {
+                        return null;
+                    }
+                    while (MainReader.Read())
+                    {
+                        if (MainReader["Reactie_ID"].ToString() == string.Empty)
+                        {
+                            int id = Convert.ToInt32(MainReader["ID"].ToString());
+                            Account account = new Account();
+                            account.UserName = MainReader["Gebruikersnaam"].ToString();
+                            account.FirstName = MainReader["Voornaam"].ToString();
+                            account.LastName = MainReader["Achternaam"].ToString();
+                            account.Education = MainReader["Opleidingsniveau"].ToString();
+                            account.Function = MainReader["Functie"].ToString();
+                            DateTime datetime = Convert.ToDateTime(MainReader["DATUM"].ToString());
+                            string context = MainReader["Bericht"].ToString();
+                            returnReactions.Add(new Reaction(id, account, datetime, context));
+                        }
+                    }
+                    foreach (Reaction r in returnReactions)
+                    {
+                        r.SubReactions = new List<Reaction>();
+                        MainReader = ExecuteQuery(commandSelect);
+                        while (MainReader.Read())
+                        {
+                            if (MainReader["Reactie_ID"].ToString() != string.Empty && Convert.ToInt32(MainReader["Reactie_ID"].ToString()) == r.Id)
+                            {
+                                int id = Convert.ToInt32(MainReader["ID"].ToString());
+                                Account account = new Account();
+                                account.UserName = MainReader["Gebruikersnaam"].ToString();
+                                account.FirstName = MainReader["Voornaam"].ToString();
+                                account.LastName = MainReader["Achternaam"].ToString();
+                                account.Education = MainReader["Opleidingsniveau"].ToString();
+                                account.Function = MainReader["Functie"].ToString();
+                                DateTime datetime = Convert.ToDateTime(MainReader["DATUM"].ToString());
+                                string context = MainReader["Bericht"].ToString();
+                                r.SubReactions.Add(new Reaction(id, account, datetime, context));
+                            }
+                        }
+                    }
+                    return returnReactions;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public static Article GetArticle(string id)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    Article returnArticle = new Article();
+                    OracleCommand commandSelect = CreateOracleCommand(connection, "Select * from Artikel LEFT JOIN ACCOUNT ON Artikel.Auteur = Account.Gebruikersnaam WHERE TITEL = :title");
+                    commandSelect.Parameters.Add(":title", id);
+                    OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                    if (MainReader.HasRows == false)
+                    {
+                        return null;
+                    }
+                    while (MainReader.Read())
+                    {
+                        Account account = new Account();
+                        int articleId = Convert.ToInt32(MainReader["ID"].ToString());
+                        string title = MainReader["Titel"].ToString();
+                        DateTime date = Convert.ToDateTime(MainReader["Datum"].ToString());
+                        string context = MainReader["Inhoud"].ToString();
+                        account.UserName = MainReader["Gebruikersnaam"].ToString();
+                        account.FirstName = MainReader["Voornaam"].ToString();
+                        account.LastName = MainReader["Achternaam"].ToString();
+                        account.Education = MainReader["Opleidingsniveau"].ToString();
+                        account.Function = MainReader["Functie"].ToString();
+                        returnArticle = new Article(articleId, title, account, date, context);
+                    }
+                    return returnArticle;
+                }
+                catch (OracleException)
+                {
+                    return null;
+                    throw;
+                }
+
             }
         }
 
@@ -163,6 +504,49 @@ namespace Tweakers.Models
             }
         }
 
+        public static Review GetReview(string title)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    Review returnReview = new Review();
+                    OracleCommand commandSelect = CreateOracleCommand(connection,
+                        "SELECT * FROM REVIEW LEFT JOIN ACCOUNT ON REVIEW.AUTEUR = ACCOUNT.GEBRUIKERSNAAM LEFT JOIN PRODUCT ON PRODUCT.ID = REVIEW.PRODUCT_ID WHERE TITEL = :title");
+                    commandSelect.Parameters.Add(":title", title);
+
+                    OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                    if (!MainReader.HasRows)
+                    {
+                        return null;
+                    }
+                    while (MainReader.Read())
+                    {
+                        Account account = new Account();
+                        Product product = new Product();
+                        int id = Convert.ToInt32(MainReader["ID"].ToString());
+                        string Rtitle = MainReader["Titel"].ToString();
+                        string context = MainReader["Review"].ToString();
+                        account.UserName = MainReader["Gebruikersnaam"].ToString();
+                        account.FirstName = MainReader["Voornaam"].ToString();
+                        account.LastName = MainReader["Achternaam"].ToString();
+                        account.Education = MainReader["Opleidingsniveau"].ToString();
+                        account.Function = MainReader["Functie"].ToString();
+                        product.ProductID = Convert.ToInt32(MainReader["PRODUCT_ID"].ToString());
+                        product.Name = MainReader["Naam"].ToString();
+                        product.Specifications = MainReader["Specificaties"].ToString();
+                        product.Price = Convert.ToDouble(MainReader["Prijs"].ToString());
+                        returnReview = new Review(id, account, product, Rtitle, context);
+                    }
+                    return returnReview;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
         public static List<Review> GetReviews(Product product)
         {
             using (OracleConnection connection = Connection)
@@ -255,6 +639,7 @@ namespace Tweakers.Models
                         account.LastName = MainReader["Achternaam"].ToString();
                         account.Education = MainReader["Opleidingsniveau"].ToString();
                         account.Function = MainReader["Functie"].ToString();
+                        account.Type = MainReader["Soort"].ToString();
                     }
                     return account;
                 }
@@ -265,15 +650,34 @@ namespace Tweakers.Models
             }
         }
 
-        internal static
+        public static
             bool DisableAccount(Account account)
         {
             throw new NotImplementedException();
         }
 
-        internal static bool UpdateAccount(Account account)
+        public static bool UpdateAccount(Account account)
         {
-            throw new NotImplementedException();
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandUpdate = CreateOracleCommand(connection,
+                        "UPDATE ACCOUNT SET Voornaam= :firstName, Achternaam = :lastName, FUNCTIE = :function, OPLEIDINGSNIVEAU = :education, WACHTWOORD = :password WHERE Gebruikersnaam = :userName");
+                    commandUpdate.Parameters.Add(":firstName", account.FirstName);
+                    commandUpdate.Parameters.Add(":lastName", account.LastName);
+                    commandUpdate.Parameters.Add(":function", account.Function);
+                    commandUpdate.Parameters.Add(":education", account.Education);
+                    commandUpdate.Parameters.Add(":password", account.Password);
+                    commandUpdate.Parameters.Add(":userName", account.UserName);
+
+                    return ExecuteNonQuery(commandUpdate);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         /// <summary>
@@ -329,7 +733,7 @@ namespace Tweakers.Models
             return reader.HasRows;
         }
 
-        internal static bool CreateAccount(Account account)
+        public static bool CreateAccount(Account account)
         {
             using (OracleConnection connection = Connection)
             {
@@ -428,6 +832,11 @@ namespace Tweakers.Models
                     throw;
                 }
             }
+        }
+
+        internal static List<Article> GetCatArticles(int iD)
+        {
+            throw new NotImplementedException();
         }
     }
 }

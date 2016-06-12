@@ -30,6 +30,46 @@ namespace Tweakers.Controllers
             return View(new ViewModel());
         }
 
+        public ActionResult NewProduct(int id = 0)
+        {
+            Session["CatID"] = id;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewProduct(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = Convert.ToInt32(Session["CatID"]);
+                if (product.AddProduct(product, id))
+                {
+                    return RedirectToAction("Overview", "Product");
+                }
+            }
+            return View(product);
+        }
+
+        public ActionResult UpdateProduct(int id = 0)
+        {
+            Product product = new Product();
+            product = product.GetProduct(id);
+            return View(product);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProduct(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                if (product.UpdateProduct(product))
+                {
+                    return RedirectToAction("Product", new { id = product.ProductID});
+                }
+            }
+            return View(product);
+        }
+
         //public ActionResult Overview(int parentId)
         //{
         //    ViewModel tempModel = new ViewModel();

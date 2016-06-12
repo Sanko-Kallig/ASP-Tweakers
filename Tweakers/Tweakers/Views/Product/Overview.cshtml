@@ -8,9 +8,6 @@
 
 <h2>Overview</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="Pricewatch">
     <tr>
         <th>
@@ -33,6 +30,12 @@ else
 {
     if (!Model.PriceWatch.Exists(n => n.SubID == ViewBag.id))
     {
+        if ((Account)Session["User"] != null && ((Account)Session["User"]).Type == "Medewerker")
+        {
+            <p>
+                @Html.ActionLink("Create New Product", "NewProduct", new { id = ViewBag.id});
+            </p>
+        }
         var c = Model.PriceWatch.Find(n => n.ID == ViewBag.id);
         <tr>
             @if (c.CatProducts != null)

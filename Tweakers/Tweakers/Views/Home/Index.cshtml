@@ -9,10 +9,14 @@
 {
     <tr>
         <td>
-            @Html.ActionLink(a.Title, "Article", new { id = a.ID}, new { @class = "list-group-item" })
+            @Html.ActionLink(a.Title, "Index", "Article", new { id = a.Title + "/"}, new { @class = "list-group-item" })
         </td>
     </tr>
 }
-
-<a href="@Url.Action("About", "Home")">About</a>
+@if ((Account)Session["User"] != null && ((Account)Session["User"]).Type == "Medewerker")
+{
+<p>
+    @Html.ActionLink("New article", "NewArticle", "Article");
+</p>
+}
 

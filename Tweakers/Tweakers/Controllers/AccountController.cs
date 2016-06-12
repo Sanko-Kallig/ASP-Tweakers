@@ -50,7 +50,7 @@ namespace Tweakers.Controllers
 
         public ActionResult UpdateProfile()
         {
-            return View();
+            return View((Account)Session["User"]);
         }
 
         [AllowAnonymous]
@@ -92,6 +92,22 @@ namespace Tweakers.Controllers
 
             return View(registeraccount);
 
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateProfile(Account updateAccount)
+        {
+            if (ModelState.IsValid)
+            {
+                if (updateAccount.UpdateAccount(updateAccount))
+                {
+                    Session["User"] = updateAccount;
+                    return RedirectToAction("Profile", "Account");
+                }
+            }
+            return View(updateAccount);
         }
     }
 }
