@@ -19,6 +19,29 @@ namespace Tweakers.Controllers
             return View(currentReview);
         }
 
+        public ActionResult NewReview(int id = 0)
+        {
+            Product product = new Product();
+            product = product.GetProduct(id);
+            Review review = new Review();
+            review.Product = product;
+            return View(review);
+        }
+
+        [HttpPost]
+        public ActionResult NewReview(Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                review.Reviewer = (Account) Session["User"];
+                if (review.AddReview(review))
+                {
+                    return RedirectToAction("Index", new {id = review.Title});
+                }
+            }
+            return View(review);
+        }
+
         [HttpPost]
         public ActionResult PlaceReaction(FormCollection collection)
         {

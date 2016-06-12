@@ -83,6 +83,51 @@ namespace Tweakers.Models
             }
         }
 
+        public static bool AddReview(Review review)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO REVIEW(ID, PRODUCT_ID, AUTEUR, TITEL, REVIEW) VALUES (REVIEW_FCSEQ.NEXTVAl, :productID, :userName, :title, :context");
+                    commandInsert.Parameters.Add(":productID", review.Product.ProductID);
+                    commandInsert.Parameters.Add(":userName", review.Reviewer.UserName);
+                    commandInsert.Parameters.Add(":title", review.Title);
+                    commandInsert.Parameters.Add(":context", review.Context);
+
+                    return ExecuteNonQuery(commandInsert);
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+
+        public static bool UpdateReview(Review review)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandUpdate = CreateOracleCommand(connection,
+                        "UPDATE REVIEW SET TITEL = :title, REVIEW = :context WHERE ID = :id");
+                    commandUpdate.Parameters.Add(":title", review.Title);
+                    commandUpdate.Parameters.Add(":context", review.Context);
+                    commandUpdate.Parameters.Add(":id", review.ID);
+
+                    return ExecuteNonQuery(commandUpdate);
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+        }
+
         public static bool UpdateProduct(Product product)
         {
             using (OracleConnection connection = Connection)
@@ -834,7 +879,7 @@ namespace Tweakers.Models
             }
         }
 
-        internal static List<Article> GetCatArticles(int iD)
+        internal static List<Article> GetCatArticles(int id)
         {
             throw new NotImplementedException();
         }

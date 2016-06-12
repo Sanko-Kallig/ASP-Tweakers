@@ -14,7 +14,6 @@ namespace Tweakers.Models
         [Required]
         public string Name { get; set; }
 
-        [DataType(DataType.Currency)]
         public double Price { get; set; }
 
         [Required]

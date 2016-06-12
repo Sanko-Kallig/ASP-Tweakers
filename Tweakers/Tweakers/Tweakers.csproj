@@ -213,6 +213,8 @@
     <Content Include="Views\Product\NewProduct.cshtml" />
     <Content Include="Views\Article\NewArticle.cshtml" />
     <Content Include="Views\Product\UpdateProduct.cshtml" />
+    <Content Include="Views\Review\NewReview.cshtml" />
+    <Content Include="Views\Review\UpdateReview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

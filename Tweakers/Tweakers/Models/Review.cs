@@ -44,6 +44,11 @@ namespace Tweakers.Models
             DatabaseManager.AddReviewReaction(reaction, review, account);
         }
 
+        public bool AddReview(Review review)
+        {
+            return DatabaseManager.AddReview(review);
+        }
+
         public Review GetReview(string title)
         {
             return DatabaseManager.GetReview(title);

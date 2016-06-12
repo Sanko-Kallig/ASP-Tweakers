@@ -47,7 +47,13 @@
         }
     }
 </div>
-@if (((Account)Session["User"]).Type == "Medewerker")
+@if (Session["User"] != null)
+{
+    <p>
+        @Html.ActionLink("Nieuwe Review", Revie)
+    </p>
+}
+@if (Session["User"] != null && ((Account)Session["User"]).Type == "Medewerker")
 {
     <p>
         @Html.ActionLink("Edit", "UpdateProduct", new { id = Model.ProductID })
