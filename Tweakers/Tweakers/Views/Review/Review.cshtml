@@ -98,6 +98,6 @@
 <p>
     @if (Session["User"] != null && Model.Reviewer.UserName == ((Account)Session["User"]).UserName)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @Html.ActionLink("Edit", "UpdateReview", new { id = Model.ID })
     }
 </p>

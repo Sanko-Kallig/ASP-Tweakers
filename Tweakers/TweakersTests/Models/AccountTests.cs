@@ -22,12 +22,6 @@ namespace Tweakers.Models.Tests
         }
 
         [TestMethod()]
-        public void DisableAccountTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
         public void UpdateAccountTest()
         {
             Account account = new Account();
@@ -41,7 +35,12 @@ namespace Tweakers.Models.Tests
         [TestMethod()]
         public void CreateAccountTest()
         {
-            Assert.Fail();
+            Account account = new Account();
+            account.UserName = "TestUser";
+            account.Email = "tester@test.nl";
+            account.FirstName = "Mr Test";
+            account.Password = "testmethod";
+            Assert.IsTrue(account.CreateAccount(account));
         }
     }
 }

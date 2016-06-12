@@ -14,7 +14,25 @@ namespace Tweakers.Models.Tests
         [TestMethod()]
         public void GetProductTest()
         {
-            Assert.Fail();
+            Product product = new Product();
+            product = product.GetProduct(1);
+            Assert.IsNotNull(product.Name);
+        }
+
+        [TestMethod()]
+        public void GetPriceWatchTest()
+        {
+            ViewModel viewModel = new ViewModel();
+            viewModel.PriceWatch = viewModel.GetPriceWatch();
+            Assert.IsNotNull(viewModel.PriceWatch);
+        }
+
+        [TestMethod()]
+        public void GetReviewsTest()
+        {
+            Product product = new Product();
+            product.ProductID = 2;
+            Assert.IsTrue(product.GetReviews(product));
         }
     }
 }

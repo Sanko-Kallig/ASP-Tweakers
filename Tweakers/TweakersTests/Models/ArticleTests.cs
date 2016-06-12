@@ -22,5 +22,15 @@ namespace Tweakers.Models.Tests
         {
             Assert.Fail();
         }
+
+        [TestMethod()]
+        public void GetArticlesTest()
+        {
+            ViewModel viewModel = new ViewModel();
+
+            viewModel.Articles = viewModel.GetArticles();
+
+            Assert.IsNotNull(viewModel.Articles);
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Tweakers.Controllers
         }
 
         [HttpPost]
-        public ActionResult PlaceSubReaction(FormCollection collection, int id = 0)
+        public ActionResult PlaceSubReaction(FormCollection collection, Article artilce, int id = 0)
         {
             ((Article)Session["CurrentArticle"]).AddSubReaction(collection["reactionSubForm"], id, (Article)Session["CurrentArticle"], (Account)Session["User"]);
             return RedirectToAction("Index", "Article", new { id = ((Article)Session["CurrentArticle"]).Title + "/" });

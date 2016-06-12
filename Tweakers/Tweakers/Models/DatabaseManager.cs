@@ -83,6 +83,58 @@ namespace Tweakers.Models
             }
         }
 
+        public static bool AddSubReviewReaction(Reaction reaction, int parentid, Review review, Account account)
+        {
+            using (OracleConnection connection = Connection)
+            {
+                try
+                {
+                    OracleCommand commandInsert = CreateOracleCommand(connection,
+                        "INSERT INTO REACTIE (ID, ACCOUNT, DATUM, BERICHT) VALUES (Reactie_FCSEQ.NextVal, :account, :datum, :bericht)");
+                    commandInsert.Parameters.Add(":account", account.UserName);
+                    commandInsert.Parameters.Add(":datum", reaction.PostTime);
+                    commandInsert.Parameters.Add(":bericht", reaction.Context);
+                    commandInsert.BindByName = true;
+
+                    if (ExecuteNonQuery(commandInsert))
+                    {
+                        OracleCommand commandSelect = CreateOracleCommand(connection, "SELECT MAX(ID) FROM REACTIE");
+                        OracleDataReader MainReader = ExecuteQuery(commandSelect);
+                        int id = 0;
+                        while (MainReader.Read())
+                        {
+                            id = Convert.ToInt32(MainReader["MAX(ID)"].ToString());
+                        }
+                        commandInsert = CreateOracleCommand(connection,
+                            "INSERT INTO REACTIE_REVIEW (REVIEW_ID, REACTIE_ID) VALUES(:reviewID, :reactionID)");
+                        commandInsert.Parameters.Add(":areviewID", review.ID);
+                        commandInsert.Parameters.Add(":reactionID", id);
+                        if (ExecuteNonQuery(commandInsert))
+                        {
+                            commandInsert = CreateOracleCommand(connection,
+                                "INSERT INTO SUBREACTIE(REACTIE_ID, SUBREACTIE_ID) VALUES(:parentid, :childid)");
+                            commandInsert.Parameters.Add(":parentid", parentid);
+                            commandInsert.Parameters.Add(":childid", id);
+                            return ExecuteNonQuery(commandInsert);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
         public static bool AddReview(Review review)
         {
             using (OracleConnection connection = Connection)

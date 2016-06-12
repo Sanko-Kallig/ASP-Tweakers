@@ -36,17 +36,43 @@ namespace Tweakers.Controllers
                 review.Reviewer = (Account) Session["User"];
                 if (review.AddReview(review))
                 {
-                    return RedirectToAction("Index", new {id = review.Title});
+                    return RedirectToAction("Index", new {id = review.Product.Name});
+                }
+            }
+            return View(review);
+        }
+
+        public ActionResult UpdateReview(string id = "")
+        {
+            Review currentReview = new Review();
+            currentReview = currentReview.GetReview(id);
+            return View(currentReview);
+        }
+
+        public ActionResult UpdateReview(Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                if (review.UpdateReview(review))
+                {
+                    return RedirectToAction("Index", new { id = review.Product.Name });
                 }
             }
             return View(review);
         }
 
         [HttpPost]
-        public ActionResult PlaceReaction(FormCollection collection)
+        public ActionResult PlaceReaction(FormCollection collection, Review review)
         {
-            ((Review)Session["CurrentReview"]).AddReaction(collection["reactionForm"], (Review)Session["CurrentReview"], (Account)Session["User"]);
-            return RedirectToAction("Index", "Review", new { id = ((Review)Session["CurrentReview"]).Title + "/" });
+            review.AddReaction(collection["reactionForm"], review, (Account)Session["User"]);
+            return RedirectToAction("Index", "Review", new { id = review.Title + "/" });
+        }
+
+        [HttpPost]
+        public ActionResult PlaceSubReaction(FormCollection collection, Review review, int id = 0)
+        {
+            review.AddSubReaction(collection["reactionSubForm"], id, review, (Account)Session["User"]);
+            return RedirectToAction("Index", "Review", new { id = review.Title + "/" });
         }
     }
 }

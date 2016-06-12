@@ -44,6 +44,13 @@ namespace Tweakers.Models
             DatabaseManager.AddReviewReaction(reaction, review, account);
         }
 
+        public void AddSubReaction(string v, int id, Review review, Account account)
+        {
+            v = v.Replace("\n", "<br>");
+            Reaction reaction = new Reaction(-1, account, DateTime.Now, v);
+            DatabaseManager.AddSubReviewReaction(reaction, id, review, account);
+        }
+
         public bool AddReview(Review review)
         {
             return DatabaseManager.AddReview(review);
@@ -59,5 +66,9 @@ namespace Tweakers.Models
             Reactions = DatabaseManager.GetReactions(review);
         }
 
+        public bool UpdateReview(Review review)
+        {
+            return DatabaseManager.UpdateReview(review);
+        }
     }
 }
