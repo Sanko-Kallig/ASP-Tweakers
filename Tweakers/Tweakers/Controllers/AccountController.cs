@@ -1,32 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Tweakers.Models;
-
+﻿
 namespace Tweakers.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using Tweakers.Models;
+
+
+    /// <summary>
+    /// Controller class for communication between the Model Account and any views that use Account.
+    /// </summary>
     public class AccountController : Controller
     {
-        // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
 
+        /// <summary>
+        /// References a profile view, and populates it with information.
+        /// </summary>
+        /// <returns>An account model stored in the session to populate the view.</returns>
         public ActionResult Profile()
         {
             return View((Account)Session["User"]);
         }
 
+        /// <summary>
+        /// A login view build on the account model
+        /// </summary>
+        /// <returns>An empty account model.</returns>
         [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
+        /// <summary>
+        /// A logout view used only to clear the session.
+        /// </summary>
+        /// <returns>Redirects to the homepage if logout succesful else</returns>
         public ActionResult Logout()
         {
             Session["User"] = null;
@@ -37,10 +49,7 @@ namespace Tweakers.Controllers
             return View();
 
         }
-        public ActionResult Test()
-        {
-            return View(new ViewModel());
-        }
+
 
         [AllowAnonymous]
         public ActionResult Register()
@@ -56,7 +65,7 @@ namespace Tweakers.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(Account loginAccount)
+        public ActionResult Login(Account loginAccount)
         {
             if (loginAccount.Email != String.Empty && loginAccount.Password != string.Empty)
             {
@@ -74,7 +83,7 @@ namespace Tweakers.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(FormCollection formCollection, Account registeraccount)
+        public ActionResult Register(FormCollection formCollection, Account registeraccount)
         {
             if (ModelState.IsValid)
             {
@@ -91,13 +100,12 @@ namespace Tweakers.Controllers
             }
 
             return View(registeraccount);
-
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UpdateProfile(Account updateAccount)
+        public ActionResult UpdateProfile(Account updateAccount)
         {
             if (ModelState.IsValid)
             {

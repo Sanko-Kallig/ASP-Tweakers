@@ -825,11 +825,6 @@ namespace Tweakers.Models
             return command.ExecuteNonQuery() != 0;
         }
 
-        private static bool CheckReader(OracleDataReader reader)
-        {
-            return reader.HasRows;
-        }
-
         public static bool CreateAccount(Account account)
         {
             using (OracleConnection connection = Connection)
