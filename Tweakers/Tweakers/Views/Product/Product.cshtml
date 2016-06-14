@@ -50,7 +50,7 @@
 @if (Session["User"] != null)
 {
     <p>
-        @Html.ActionLink("Nieuwe Review", Revie)
+        @Html.ActionLink("Nieuwe Review", "NewReview", "Review")
     </p>
 }
 @if (Session["User"] != null && ((Account)Session["User"]).Type == "Medewerker")

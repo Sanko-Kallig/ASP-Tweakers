@@ -5,7 +5,7 @@ using System.Web;
 using Tweakers.Models;
 
 namespace Tweakers.Models
-{0
+{
     public class Review
     {
         public int ID { get; set; }
