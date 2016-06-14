@@ -145,7 +145,7 @@
     <Content Include="scripts\bootstrap - lumen.css" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram.cd" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />

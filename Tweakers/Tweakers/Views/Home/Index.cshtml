@@ -3,8 +3,8 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>Welcome tot Tweakers.net</h2>
+<div>
 @foreach (Article a in Model.Articles)
 {
     <tr>
@@ -13,6 +13,8 @@
         </td>
     </tr>
 }
+</div>
+
 @if ((Account)Session["User"] != null && ((Account)Session["User"]).Type == "Medewerker")
 {
 <p>

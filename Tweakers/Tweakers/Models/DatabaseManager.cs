@@ -83,6 +83,16 @@ namespace Tweakers.Models
             }
         }
 
+        internal static bool UpdateArticle(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool AddArticle(Article article, int catid)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool AddSubReviewReaction(Reaction reaction, int parentid, Review review, Account account)
         {
             using (OracleConnection connection = Connection)

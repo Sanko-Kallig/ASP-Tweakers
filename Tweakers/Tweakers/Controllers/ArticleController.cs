@@ -26,11 +26,11 @@ namespace Tweakers.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewArticle(Article article)
+        public ActionResult NewArticle(Article article, int catid = 0)
         {
             if (ModelState.IsValid)
             {
-                //article.AddArticle(article,)
+                article.AddArticle(article, catid);
             }
             return View(article);
         }

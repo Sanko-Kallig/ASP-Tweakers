@@ -37,6 +37,16 @@ namespace Tweakers.Models
             this.Context = context;
         }
 
+        public bool AddArticle(Article article, int catid)
+        {
+            return DatabaseManager.AddArticle(article, catid);
+        }
+
+        public bool UpdateArticle(Article article)
+        {
+            return DatabaseManager.UpdateArticle(article);
+        }
+
         public void AddReaction(string v, Article article, Account account)
         {
             v = v.Replace("\n", "<br>");
